@@ -21,15 +21,15 @@ after_success:
   - docker push ngamenichaka/multi-nginx
   - docker push ngamenichaka/multi-server
   - docker push ngamenichaka/multi-worker
-  deploy:
-    edge: true
-    provider: elasticbeanstalk
-    region: eu-west-3
-    app: multi-docker
-    env: MultiDocker-env
-    bucket_name: elasticbeanstalk-eu-west-3-764796658196
-    bucket_path: multi-docker
-    on:
-      branch: master
-      access_key_id: $AWS_ACCESS_KEY
-      secret_access_key: $AWS_SECRET_KEY
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: eu-west-3
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-eu-west-3-764796658196
+  bucket_path: multi-docker
+  on:
+    branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
