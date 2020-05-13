@@ -1,0 +1,23 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t chaka/react-test -f ./client/Dockerfile.dev . #we use Dockerfile.dev because we have necessary to start test
+
+script:
+  - docker run -e CI=true chaka/react-test npm run test
+
+after_success:
+  - docker build -t chaka/multi-client ./client
+  - docker build -t chaka/multi-nginx ./nginx
+  - docker build -t chaka/multi-server ./server
+  - docker build -t chaka/multi-worker ./worker
+  #Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+  #Take those images and push them to docker hub
+  - docker push chaka/multi-client
+  - docker push chaka/multi-nginx
+  - docker push chaka/multi-server
+  - docker push chaka/multi-worker
